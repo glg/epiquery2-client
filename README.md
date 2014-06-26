@@ -1,4 +1,4 @@
-epiquery2-client
+Overview
 ================
 
-Client for connecting to epiquery2
+This is the client for [https://github.com/igroff/epiquery2](epiquery2)

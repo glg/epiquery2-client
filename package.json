@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "coffee-script": "1.6.2",
+    "q": "^1.0.1",
     "simplog": "*",
     "underscore": "1.4.4",
     "ws": "^0.4.31"

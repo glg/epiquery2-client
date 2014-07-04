@@ -2,6 +2,9 @@ EventEmitter      = require('events').EventEmitter
 _                 = require 'underscore'
 log               = require 'simplog'
 WebSocket         = require './reconnecting-websocket'
+guid              = require './guid'
+q                 = require 'q'
+
 
 class EpiClient extends EventEmitter
   constructor: (@url) ->
@@ -50,7 +53,6 @@ class EpiClient extends EventEmitter
     @emit 'close'
 
   onrow: (msg) => @emit 'row', msg
-  ondata: (msg) => @emit 'data', msg
   onbeginquery: (msg) => @emit 'beginquery', msg
   onendquery: (msg) => @emit 'endquery', msg
   onerror: (msg) => @emit 'error', msg
@@ -71,5 +73,50 @@ class EpiBufferingClient extends EpiClient
     @results[msg.queryId].currentResultSet = newResultSet
     @results[msg.queryId].resultSets.push newResultSet
 
+class EpiSimpleClient extends EpiBufferingClient
+  constructor: (@url) ->
+    super(@url)
+    @callbacks = {}
+
+  onrow: (msg) =>
+    row = {}
+
+    msg.columns.forEach (column) ->
+      row[column.name] = column.value
+
+    @results[msg.queryId].currentResultSet.push(row)
+
+  exec: (connectionName, template, data, callback=null) =>
+    queryId = guid()
+
+    deferred = q.defer()
+    if callback
+      @callbacks[queryId] = callback
+    else
+      @callbacks[queryId] = deferred
+
+    @query(connectionName, template, data, queryId)
+
+    deferred.promise
+
+  onendquery: (msg) =>
+    console.log 'query ended'
+    return unless callback = @callbacks[msg.queryId]
+
+    if callback.promise
+      callback.resolve(@results[msg.queryId])
+    else
+      callback(null, @results[msg.queryId])
+
+  onerror: (msg) =>
+    return unless callback = @callbacks[msg.queryId]
+
+    if callback.promise
+      callback.reject(@results[msg.queryId])
+    else
+      callback(msg)
+
+
 module.exports.EpiClient = EpiClient
 module.exports.EpiBufferingClient = EpiBufferingClient
+module.exports.EpiSimpleClient = EpiSimpleClient

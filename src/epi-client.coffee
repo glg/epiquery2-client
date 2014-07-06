@@ -1,21 +1,16 @@
 EventEmitter      = require('events').EventEmitter
 _                 = require 'underscore'
 log               = require 'simplog'
-WebSocket         = require './reconnecting-websocket'
-guid              = require './guid'
-q                 = require 'q'
-
+WebSocket         = require 'hunting-websocket'
 
 class EpiClient extends EventEmitter
   constructor: (@url) ->
     @connect()
 
   connect: =>
-    # we have a couple possible implementations here, HuntingWebsocket
-    # expects an array of urls, so we make that if needed
-    if WebSocket.name is "HuntingWebsocket"
-      if not _.isArray(@url)
-        @url = [@url]
+    # HuntingWebsocket expects an array of urls, so we make that if needed
+    if not _.isArray(@url)
+      @url = [@url]
     @ws = new WebSocket(@url)
     @queryId = 0
     @ws.onmessage = @onMessage
@@ -59,64 +54,5 @@ class EpiClient extends EventEmitter
   onbeginrowset: (msg) => @emit 'beginrowset', msg
   onsend: (msg) => @emit 'send', msg
 
-class EpiBufferingClient extends EpiClient
-  constructor: (@url) ->
-    super(@url)
-    @results = {}
 
-  onrow: (msg) =>
-    @results[msg.queryId].currentResultSet.push(msg.columns)
-  
-  onbeginrowset: (msg) =>
-    newResultSet = []
-    @results[msg.queryId] ||= resultSets: []
-    @results[msg.queryId].currentResultSet = newResultSet
-    @results[msg.queryId].resultSets.push newResultSet
-
-class EpiSimpleClient extends EpiBufferingClient
-  constructor: (@url) ->
-    super(@url)
-    @callbacks = {}
-
-  onrow: (msg) =>
-    row = {}
-
-    msg.columns.forEach (column) ->
-      row[column.name] = column.value
-
-    @results[msg.queryId].currentResultSet.push(row)
-
-  exec: (connectionName, template, data, callback=null) =>
-    queryId = guid()
-
-    deferred = q.defer()
-    if callback
-      @callbacks[queryId] = callback
-    else
-      @callbacks[queryId] = deferred
-
-    @query(connectionName, template, data, queryId)
-
-    deferred.promise
-
-  onendquery: (msg) =>
-    console.log 'query ended'
-    return unless callback = @callbacks[msg.queryId]
-
-    if callback.promise
-      callback.resolve(@results[msg.queryId])
-    else
-      callback(null, @results[msg.queryId])
-
-  onerror: (msg) =>
-    return unless callback = @callbacks[msg.queryId]
-
-    if callback.promise
-      callback.reject(@results[msg.queryId])
-    else
-      callback(msg)
-
-
-module.exports.EpiClient = EpiClient
-module.exports.EpiBufferingClient = EpiBufferingClient
-module.exports.EpiSimpleClient = EpiSimpleClient
+module.exports = EpiClient

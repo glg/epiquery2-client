@@ -2,7 +2,7 @@
   "name": "epiquery2-client",
   "version": "0.0.1",
   "description": "Client for epiquery2",
-  "main": "lib/epi-client.js",
+  "main": "lib/all-clients.js",
   "devDependencies": {
     "browserify": "3.24.1",
     "coffeeify": "0.5.2",
@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "coffee-script": "1.6.2",
+    "hunting-websocket": "0.0.3",
     "q": "^1.0.1",
     "simplog": "*",
     "underscore": "1.4.4",

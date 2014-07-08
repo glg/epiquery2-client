@@ -21,7 +21,7 @@
     "coffee-script": "1.6.2",
     "hunting-websocket": "0.0.3",
     "q": "^1.0.1",
-    "simplog": "*",
+    "simplog": "0.0.7",
     "underscore": "1.4.4",
     "ws": "^0.4.31"
   },

@@ -1,6 +1,6 @@
 {
   "name": "epiquery2-client",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Client for epiquery2",
   "main": "lib/all-clients.js",
   "devDependencies": {
@@ -18,12 +18,12 @@
     "zombie": "2.0.0-alpha24"
   },
   "dependencies": {
+    "awesome-websocket": "0.0.14",
     "coffee-script": "1.6.2",
     "q": "^1.0.1",
     "simplog": "0.0.7",
     "underscore": "1.4.4",
-    "ws": "^0.4.31",
-    "ws-additions": "0.0.13"
+    "ws": "^0.4.31"
   },
   "engine": {
     "node": "0.10.3"

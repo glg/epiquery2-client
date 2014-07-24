@@ -1,7 +1,7 @@
 EventEmitter      = require('events').EventEmitter
 _                 = require 'underscore'
 log               = require 'simplog'
-WebSocket         = require 'hunting-websocket'
+AwesomeWebSocket         = require('ws-additions').AwesomeWebSocket
 
 class EpiClient extends EventEmitter
   constructor: (@url) ->
@@ -11,7 +11,7 @@ class EpiClient extends EventEmitter
     # HuntingWebsocket expects an array of urls, so we make that if needed
     if not _.isArray(@url)
       @url = [@url]
-    @ws = new WebSocket(@url)
+    @ws = new AwesomeWebSocket(@url)
     @queryId = 0
     @ws.onmessage = @onMessage
     @ws.onclose = @onClose

@@ -1,7 +1,7 @@
 EventEmitter      = require('events').EventEmitter
 _                 = require 'underscore'
 log               = require 'simplog'
-AwesomeWebSocket         = require('awesome-websocket').AwesomeWebSocket
+AwesomeWebSocket  = require('awesome-websocket').AwesomeWebSocket
 
 class EpiClient extends EventEmitter
   constructor: (@url) ->

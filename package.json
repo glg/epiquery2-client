@@ -2,7 +2,7 @@
   "name": "epiquery2-client",
   "version": "0.0.3",
   "description": "Client for epiquery2",
-  "main": "lib/all-clients.js",
+  "main": "index.js",
   "devDependencies": {
     "browserify": "3.24.1",
     "coffeeify": "0.5.2",
@@ -18,8 +18,8 @@
     "zombie": "2.0.0-alpha24"
   },
   "dependencies": {
-    "awesome-websocket": "0.0.14",
-    "coffee-script": "1.6.2",
+    "awesome-websocket": "git://github.com/nswarr/awesome-websocket",
+    "coffee-script": "1.7.1",
     "q": "^1.0.1",
     "simplog": "0.0.7",
     "underscore": "1.4.4",

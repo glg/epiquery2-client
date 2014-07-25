@@ -1,5 +1,5 @@
 # vim: ft=coffee
-clients = require './all-clients'
+clients = require '../index'
 
 if window?
   window.EpiClient = clients.EpiClient

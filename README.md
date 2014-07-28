@@ -1,7 +1,7 @@
 Overview
 ================
 
-
+**TL;DR** - Go use the [EpiBufferingClient](#epibufferingclient).
 
 This is the group of clients that are available for the [epiquery2](https://github.com/igroff/epiquery2) service.  There are three choices:
 
@@ -9,38 +9,17 @@ This is the group of clients that are available for the [epiquery2](https://gith
 2. [EpiClient](src/epi-client.litcoffee)
 3. [EpiSimpleClient](src/epi-simple-client.litcoffee)
 
-In addition to a simplified interface, they also feature automatic reconnect, failover and socket hunting.  Due to this, all clients can be configured with either a single epiquery endpoint or multiple endpoints.  For example, you can provide a single string to the constructor or an array of strings each representing an endpoint.
+
+Out of the box, they feature automatic reconnect, failover and socket hunting.  Due to this, all clients can be configured with either a single epiquery endpoint or multiple endpoints.
 
     var EpiClient = require("epiquery2-client").EpiClient;
     
-    var oneServerClient = new EpiBufferingClient('ws://localhost:7171/sockjs/websocket');
+    var singleServerClient = new EpiBufferingClient('ws://localhost:7171/sockjs/websocket');
     
     var multiServerClient = new EpiBufferingClient([
         'ws://localhost:7171/sockjs/websocket',
         'ws://localhost:8181/sockjs/websocket',
     ]);
-
-## TL;DR 
-Go use the [EpiBufferingClient](#epibufferingclient).
-    
-### onrow Row data
-
-Rows are returned to the client when the **onrow** event is triggered.  The message passed to this event contains a field called **columns** that is an array of key/value pairs.  They key is the name of the column and the value is the actual value of that column being returned.  Here is an example message.
-
-    {
-        "queryId": "1234",
-        "columns": [
-            {
-                "USER_ID": "4321"
-            },
-            {
-                "ACTIVE_IND": 1
-            },
-            {
-                "FAVORITE_COLOR": "Red"
-            }
-        ]
-    }
 
 ### EpiBufferingClient
 
@@ -115,9 +94,28 @@ Most of the time, you probably don't need this level of control.  Use your discr
     client.query("glglive", 'councilMember/game/getAchievements.mustache', {cmId: 1}, queryOne);
     
     client.query("glglive", 'councilMember/game/getAchievements.mustache', {cmId: 2}, queryTwo);
+    
+The rows are collected in the onrow callback outlined above.  The message passed to this event contains a field called **columns** that is an array of key/value pairs.  They key is the name of the column and the value is the actual value of that column being returned.  Here is an example message.
+
+    {
+        "queryId": "1234",  //Optional
+        "columns": [
+            {
+                "USER_ID": "4321"
+            },
+            {
+                "ACTIVE_IND": 1
+            },
+            {
+                "FAVORITE_COLOR": "Red"
+            }
+        ]
+    }
 
 ### EpiSimpleClient
-This class inherits from the EpiBufferingClient and changes the way rows are represented.  Instead of a row being an array of key/value pairs, it turns the row into an object with fields and values.  The only drawback to this approach is that if there is more than one column returned with the same name, the last one read will win.  But if you've got multiple columns with the same name coming back, you've got other problems.
+This class inherits from the EpiBufferingClient and changes the way rows are represented.  Instead of a row being an array of key/value pairs, it turns the row into an object with fields and values.  
+
+The only drawback to this approach is that if there is more than one column returned with the same name, the last one read will win.  But if you've got multiple columns with the same name coming back, it's recommended to differentiate them for your own sanity.
 
     var EpiSimpleClient = require("epiquery2-client").EpiSimpleClient;
     

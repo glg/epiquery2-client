@@ -1,10 +1,11 @@
+EpiClient
+=========
+
     EventEmitter      = require('events').EventEmitter
     _                 = require 'underscore'
     log               = require 'simplog'
     AwesomeWebSocket  = require('awesome-websocket').AwesomeWebSocket
 
-EpiClient
-=========
 This is the base client for communicating with epiquery2.
 
     class EpiClient extends EventEmitter

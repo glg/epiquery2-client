@@ -1,7 +1,8 @@
-    EpiClient = require './epi-client'
-
 EpiBufferingClient
 ==================
+
+    EpiClient = require './epi-client'
+
 This is a subclass of the [EpiClient](epi-client.litcoffee) that simplifies querying by aggregating the results of a query and providing a query callback mechanism instead of tracking queries by hand.
 
     class EpiBufferingClient extends EpiClient

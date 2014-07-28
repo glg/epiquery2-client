@@ -63,11 +63,17 @@ This is probably the simplest way to start querying.  You can either specify a c
 The **results** returned to the callback and promise is an array of row sets.  Each row set is an array of rows.  Each row is an array of key/value pair columns.  To visualize,
 
     [
-        [ //Result Set 0
-            [ { "USER_ID": "4321" }, { "FAVORITE_COLOR": "Red" } ], //Row 0
-            [ { "USER_ID": "6789" }, { "FAVORITE_COLOR": "Blue" } ] //Row 1
+        [ //Row Set 0
+            [ //Row 0
+                { "USER_ID": "4321" }, //Column 0
+                { "FAVORITE_COLOR": "Red" } //Column 1
+            ], 
+            [ //Row 1
+                { "USER_ID": "6789" }, //Column 0
+                { "FAVORITE_COLOR": "Blue" } //Column 1
+            ] 
         ],
-        [ //Result Set 1
+        [ //Row Set 1
             [ { "COUNTRY": "USA" } ], //Row 0
             [ { "COUNTRY": "Canada" } ] //Row 1
         ]

@@ -68,21 +68,27 @@ Echoes events returned from epiquery.
 They're all pretty self explanatory.  The messages provided to the events have the optional field **queryId** that corresponds to the  queryId that was provided to the **query** function.  Use that to track a particular request in the query's lifecycle.
 
 Invoked at the start of the query's lifecycle.  No query has occurred yet.
+
       onbeginquery: (msg) => @emit 'beginquery', msg
 
 Invoked when a new row set is began.  Row sets are the result of executing a singular query.  For example, if you executed two SQL statements, each would be its own row set.
+
       onbeginrowset: (msg) => @emit 'beginrowset', msg
 
 Invoked every time a row of data is returned from a row set.
+
       onrow: (msg) => @emit 'row', msg
 
 Invoked at the end of a row set.
+
       onendrowset: (msg) => @emit 'endrowset', msg
 
 Invoked at the end of the query's overall lifecycle.
+
       onendquery: (msg) => @emit 'endquery', msg
 
 Invoked if an error is encountered while processing the query.
+
       onerror: (msg) => @emit 'error', msg
 
 

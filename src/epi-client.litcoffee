@@ -67,7 +67,7 @@ Echoes events returned from epiquery.
         @emit 'close'
 
 ## Events
-They're all pretty self explanatory.  The messages provided to the events have the optional field **queryId** that corresponds to the  queryId that was provided to the **query** function.  Use that to track a particular request in the query's lifecycle.
+They're all pretty self explanatory.  The messages provided to the events have the optional field **queryId** that corresponds to the  queryId that was provided to the **query** function.  Use that to track the lifecycle of a particular query.
 
 Invoked at the start of the query's lifecycle.  Important to note, this is the beginning of the whole epiquery request, not individual statements in the request.
 

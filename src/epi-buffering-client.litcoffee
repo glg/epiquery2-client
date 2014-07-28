@@ -2,7 +2,7 @@
 
 EpiBufferingClient
 ==================
-This is a subclass of the [EpiClient](epiquery-client.litcoffee) that will take care of aggregating the data for a particular query.  The client is still responsible with providing a unique queryId to the **query** function in order for this to work.  Otherwise, things get wacky.
+This is a subclass of the [EpiClient](epi-client.litcoffee) that will take care of aggregating the data for a particular query.  The client is still responsible with providing a unique queryId to the **query** function in order for this to work.  Otherwise, things get wacky.
 
 The trick with this one is to provide a callback for the **onendquery** event.  The result of the query will be found in the **results** field indexed by its queryId.
 

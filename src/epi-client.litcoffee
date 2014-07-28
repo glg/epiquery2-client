@@ -1,4 +1,4 @@
-    EventEmitter      = require('events').EventEmitter
+  EventEmitter      = require('events').EventEmitter
     _                 = require 'underscore'
     log               = require 'simplog'
     AwesomeWebSocket  = require('awesome-websocket').AwesomeWebSocket
@@ -69,7 +69,7 @@ Echoes events returned from epiquery.
 ## Events
 They're all pretty self explanatory.  The messages provided to the events have the optional field **queryId** that corresponds to the  queryId that was provided to the **query** function.  Use that to track a particular request in the query's lifecycle.
 
-Invoked at the start of the query's lifecycle.  No query has occurred yet.
+Invoked at the start of the query's lifecycle.  Important to note, this is the beginning of the whole epiquery request, not individual statements in the request.
 
       onbeginquery: (msg) => @emit 'beginquery', msg
 

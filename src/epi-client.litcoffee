@@ -73,7 +73,7 @@ Invoked at the start of the query's lifecycle.  No query has occurred yet.
 
       onbeginquery: (msg) => @emit 'beginquery', msg
 
-Invoked when a new row set is began.  Row sets are the result of executing a singular query.  For example, if you executed two SQL statements, each would be its own row set.
+Invoked when a new row set is began.  Row sets are the result of executing an individual statement.  For example, if you executed two SQL statements, each would be its own row set.
 
       onbeginrowset: (msg) => @emit 'beginrowset', msg
 

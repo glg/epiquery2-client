@@ -1,4 +1,4 @@
-  EpiClient = require './epi-client'
+    EpiClient = require './epi-client'
 
 EpiBufferingClient
 ==================

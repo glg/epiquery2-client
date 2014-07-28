@@ -28,11 +28,14 @@ on interruptions and endpoint hunting to find the fastest connection.
         @ws.onerror = (err) ->
           log.error "EpiClient socket error: ", err
 
-The **query** function kicks off the processing of a query.  While the function is called query, epiquery may actually be executing multiple queries against a data source.
+The **query** function kicks off the processing of a query which triggers a handful of events in the lifecycle of a query.  See the events section below for more details.
 
 **connectionName** - The string key that maps to an epiquery2 named connection e.g. 'mysql', 'mssql', 'file'.  See more [here](https://github.com/igroff/epiquery2#configuration).
+
 **template** - The path to the template you're querying.  The path is relative to the root of the template directory defined in epiquery2.
+
 **data** - This is a just javascript object you can pass that contains any data you want to use in your epiquery template.
+
 **queryId** - A unique identifier used to refer to the query throughout it's Active period. It will be included with all messages generated during it's processing. It is the caller's responsibility to generate a unique id for each query requested.
 
       query: (connectionName, template, data, queryId=null) =>
@@ -48,7 +51,6 @@ The **query** function kicks off the processing of a query.  While the function 
 
         log.debug "executing query: #{template} data:#{JSON.stringify(data)}"
         @ws.send JSON.stringify(req)
-
 
 Echoes events returned from epiquery.
 

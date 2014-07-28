@@ -1,4 +1,4 @@
-  EventEmitter      = require('events').EventEmitter
+    EventEmitter      = require('events').EventEmitter
     _                 = require 'underscore'
     log               = require 'simplog'
     AwesomeWebSocket  = require('awesome-websocket').AwesomeWebSocket

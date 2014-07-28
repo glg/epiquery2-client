@@ -6,8 +6,8 @@ Overview
 This is the group of clients that are available for the [epiquery2](https://github.com/igroff/epiquery2) service.  There are three choices:
 
 1. [EpiBufferingClient](src/epi-buffering-client.litcoffee) (recommended)
-2. [EpiClient](src/epi-client.litcoffee)
-3. [EpiSimpleClient](src/epi-simple-client.litcoffee)
+2. [EpiSimpleClient](src/epi-simple-client.litcoffee)
+3. [EpiClient](src/epi-client.litcoffee)
 
 
 Out of the box, they feature automatic reconnect, failover and socket hunting.  Due to this, all clients can be configured with either a single epiquery endpoint or multiple endpoints.
@@ -58,6 +58,22 @@ The **results** returned to the callback and promise is an array of row sets.  E
         ]
     ]
     
+### EpiSimpleClient
+This class inherits from the EpiBufferingClient but changes the way rows are represented.  Instead of a row being an array of key/value pairs, it turns the row into an object with fields and values.  It's convenient if you don't like iterating the columns of the rows to find their values.
+
+The only drawback to this approach is that if there is more than one column returned with the same name, the last one read will win.  But if you've got multiple columns with the same name coming back, it's recommended to differentiate them for your own sanity.
+
+    var EpiSimpleClient = require("epiquery2-client").EpiSimpleClient;
+    
+    var client = new EpiBufferingClient('ws://localhost:7171/sockjs/websocket');
+    
+    //SELECT USER_ID, FAVE_COLOR FROM USERS WHERE USER_ID = ?
+    p = client.exec("glglive", 'user/profile.mustache', {USER_ID: 14})
+    p.then(function(results) {
+        var user = results[0][0] //First row set, first row
+        console.log("Favorite color is " + user.FAVE_COLOR); 
+    });
+   
 ### EpiClient
 
 The vanilla EpiClient is a little more hands-on.  The main difference with the EpiBufferingClient is that you pass a queryId to the **query** function and then monitor the events of the client so that you can correlate the original query to the data you're building.  
@@ -111,20 +127,4 @@ The rows are collected in the onrow callback outlined above.  The message passed
             }
         ]
     }
-
-### EpiSimpleClient
-This class inherits from the EpiBufferingClient and changes the way rows are represented.  Instead of a row being an array of key/value pairs, it turns the row into an object with fields and values.  
-
-The only drawback to this approach is that if there is more than one column returned with the same name, the last one read will win.  But if you've got multiple columns with the same name coming back, it's recommended to differentiate them for your own sanity.
-
-    var EpiSimpleClient = require("epiquery2-client").EpiSimpleClient;
-    
-    var client = new EpiBufferingClient('ws://localhost:7171/sockjs/websocket');
-    
-    //SELECT USER_ID, FAVE_COLOR FROM USERS WHERE USER_ID = ?
-    p = client.exec("glglive", 'user/profile.mustache', {USER_ID: 14})
-    p.then(function(results) {
-        var user = results[0][0] //First row set, first row
-        console.log("Favorite color is " + user.FAVE_COLOR); 
-    });
     

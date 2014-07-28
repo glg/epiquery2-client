@@ -2,8 +2,6 @@ EpiSimpleClient
 ===============
 
     EpiBufferingClient    = require('./epi-buffering-client')
-    guid                  = require './guid'
-    q                     = require 'q'
 
 The EpiSimpleClient inherits from [EpiBufferingClient](epi-buffering-client.litcoffee) and changes the format of the rows from an array of key/value pairs into an object with named fields that contain values.
 

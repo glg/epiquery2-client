@@ -2,6 +2,8 @@ EpiBufferingClient
 ==================
 
     EpiClient = require './epi-client'
+    guid                  = require './guid'
+    q                     = require 'q'
 
 This is a subclass of the [EpiClient](epi-client.litcoffee) that simplifies querying by aggregating the results of a query and providing a query callback mechanism instead of tracking queries by hand.
 

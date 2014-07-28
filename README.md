@@ -21,7 +21,7 @@ In addition to a simplified interface, they also feature automatic reconnect, fa
     ]);
 
 ## TL;DR 
-Go use the EpiBufferingClient.
+Go use the [EpiBufferingClient](#epibufferingclient).
     
 ### onrow Row data
 

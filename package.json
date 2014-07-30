@@ -18,7 +18,7 @@
     "zombie": "2.0.0-alpha24"
   },
   "dependencies": {
-    "awesome-websocket": "git://github.com/nswarr/awesome-websocket",
+    "awesome-websocket": "git://github.com/glg/awesome-websocket",
     "coffee-script": "1.7.1",
     "q": "^1.0.1",
     "simplog": "0.0.7",

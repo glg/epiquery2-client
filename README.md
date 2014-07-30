@@ -3,6 +3,9 @@ Overview
 
 **TL;DR** - Go use the [EpiBufferingClient](#epibufferingclient).
 
+### Get it
+    npm install epiquery2-client
+
 This is the group of clients that are available for the [epiquery2](https://github.com/igroff/epiquery2) service.  There are three choices:
 
 1. [EpiBufferingClient](src/epi-buffering-client.litcoffee) (recommended)

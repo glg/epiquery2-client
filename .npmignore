@@ -1,4 +1,4 @@
-src
 etc
 .gitignore
 gulpfile.js
+.idea

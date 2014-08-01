@@ -18,7 +18,7 @@
     "zombie": "2.0.0-alpha24"
   },
   "dependencies": {
-    "awesome-websocket": "0.0.18",
+    "awesome-websocket": "0.0.19",
     "coffee-script": "1.7.1",
     "q": "^1.0.1",
     "simplog": "0.0.7",

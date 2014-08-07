@@ -1,14 +1,13 @@
 EpiClient
 =========
 
-    EventEmitter      = require('events').EventEmitter
     _                 = require 'underscore'
     log               = require 'simplog'
     AwesomeWebSocket  = require('awesome-websocket').AwesomeWebSocket
 
 This is the base client for communicating with epiquery2.
 
-    class EpiClient extends EventEmitter
+    class EpiClient
 
 The @url constructor argument can be either a singular string or an array of strings that represent the
 epiquery2 endpoint(s).
@@ -21,13 +20,12 @@ on interruptions and endpoint hunting to find the fastest connection.
 
       connect: =>
         @ws = new AwesomeWebSocket(@url)
-        @queryId = 0
         @ws.onmessage = @onMessage
         @ws.onclose = @onClose
         @ws.onopen = () ->
-          log.debug "Epiclient connection opened"
+          log.debug "EpiClient connection opened"
         @ws.onerror = (err) =>
-          @emit 'error', err
+          log.debug "EpiClient socket error"
 
 The **query** function kicks off the processing of a query which triggers a handful of events in the lifecycle of a query.  See the events section below for more details.
 
@@ -64,35 +62,32 @@ Echoes events returned from epiquery.
         if handler
           handler(message)
 
-      onClose: () =>
-        @emit 'close'
-
 ## Events
 They're all pretty self explanatory.  The messages provided to the events have the optional field **queryId** that corresponds to the  queryId that was provided to the **query** function.  Use that to track the lifecycle of a particular query.
 
 Invoked at the start of the query's lifecycle.  Important to note, this is the beginning of the whole epiquery request, not individual statements in the request.
 
-      onbeginquery: (msg) => @emit 'beginquery', msg
+      onbeginquery: (msg) ->
 
 Invoked when a new row set is began.  Row sets are the result of executing an individual statement.  For example, if you executed two SQL statements, each would be its own row set.
 
-      onbeginrowset: (msg) => @emit 'beginrowset', msg
+      onbeginrowset: (msg) ->
 
 Invoked every time a row of data is returned from a row set.
 
-      onrow: (msg) => @emit 'row', msg
+      onrow: (msg) ->
 
 Invoked at the end of a row set.
 
-      onendrowset: (msg) => @emit 'endrowset', msg
+      onendrowset: (msg) ->
 
 Invoked at the end of the query's overall lifecycle.
 
-      onendquery: (msg) => @emit 'endquery', msg
+      onendquery: (msg) ->
 
 Invoked if an error is encountered while processing the query.
 
-      onerror: (msg) => @emit 'error', msg
+      onerror: (msg) -> console.log "EpiClient socket error"
 
 
 

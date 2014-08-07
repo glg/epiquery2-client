@@ -26,8 +26,8 @@ on interruptions and endpoint hunting to find the fastest connection.
         @ws.onclose = @onClose
         @ws.onopen = () ->
           log.debug "Epiclient connection opened"
-        @ws.onerror = (err) ->
-          log.error "EpiClient socket error: ", err
+        @ws.onerror = (err) =>
+          @emit 'error', err
 
 The **query** function kicks off the processing of a query which triggers a handful of events in the lifecycle of a query.  See the events section below for more details.
 
@@ -51,14 +51,14 @@ The **query** function kicks off the processing of a query which triggers a hand
         @ws.forceClose = req.closeOnEnd
 
         log.debug "executing query: #{template} data:#{JSON.stringify(data)}"
-        @ws.send JSON.stringify(req)
+        @ws.send req
 
 Echoes events returned from epiquery.
 
-      onMessage: (message) =>
+      onMessage: (event) =>
         # if the browser has wrapped this for use, we'll be interested in its
         # 'data' element
-        message = message.data if message.type? and message.type = 'message'
+        message = event.data
         message = JSON.parse(message) if typeof message is 'string'
         handler = @['on' + message.message]
         if handler

@@ -59,7 +59,7 @@ If the query drops out due to error, we call back to either the promise or user-
         return unless callback = @callbacks[msg.queryId]
 
         if callback.promise
-          callback.reject(@results[msg.queryId])
+          callback.reject(msg)
         else
           callback(msg)
 

@@ -21,11 +21,12 @@ on interruptions and endpoint hunting to find the fastest connection.
       connect: =>
         @ws = new AwesomeWebSocket(@url)
         @ws.onmessage = @onMessage
-        @ws.onclose = @onClose
         @ws.onopen = () ->
           log.debug "EpiClient connection opened"
         @ws.onerror = (err) =>
           log.debug "EpiClient socket error"
+        @ws.onsendfail = (message) =>
+          @onerror(message)
 
 The **query** function kicks off the processing of a query which triggers a handful of events in the lifecycle of a query.  See the events section below for more details.
 
@@ -87,7 +88,7 @@ Invoked at the end of the query's overall lifecycle.
 
 Invoked if an error is encountered while processing the query.
 
-      onerror: (msg) -> console.log "EpiClient socket error"
+      onerror: (msg) ->
 
 
 

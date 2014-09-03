@@ -16,7 +16,7 @@ This simplifies querying by aggregating the results of a query and providing a q
 
 When a row set is began, a new object is inserted into the local **results** that will be populated with that row set as the rows come in.  Each time a new row set is began, the process starts over.
 
-        @client = new EpiClient(@url)
+        @client = new EpiClient(url)
         @client.onbeginrowset = (msg) =>
           newResultSet = []
           @results[msg.queryId] ||= resultSets: []

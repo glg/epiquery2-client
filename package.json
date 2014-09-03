@@ -1,6 +1,6 @@
 {
   "name": "epiquery2-client",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "Client for epiquery2",
   "main": "index.js",
   "devDependencies": {

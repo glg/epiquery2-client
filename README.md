@@ -16,7 +16,7 @@ These are the clients that are available for the [epiquery2](https://github.com/
 
 Out of the box, they feature automatic reconnect, failover and socket hunting.  Due to this, all clients can be configured with either a single epiquery endpoint or multiple endpoints.
 
-```js
+```JavaScript
 var EpiClient = require("epiquery2-client").EpiClient;
 
 var singleServerClient = new EpiBufferingClient('ws://localhost:7171/sockjs/websocket');
@@ -31,7 +31,7 @@ var multiServerClient = new EpiBufferingClient([
 
 This is probably the simplest way to start querying.  You can either specify a call back for querying or you can use promises.  
 
-```js
+```JavaScript
 var EpiBufferingClient = require("epiquery2-client").EpiBufferingClient;
 
 var client = new EpiBufferingClient('ws://localhost:7171/sockjs/websocket');
@@ -51,7 +51,7 @@ The **results** returned to the callback and promise is an array of row sets.  E
 
 To visualize,
 
-```json
+```JSON
 [ //Row Sets
     [ //Row Set 0
         { //Row 0
@@ -78,7 +78,7 @@ The vanilla EpiClient gives you more control over the lifecycle of the query.  T
 
 Most of the time, you probably don't need this level of control.  Use discretion.  Here's an example of multiple, concurrent queries (this is not an issue with the EpiBufferingClient).
 
-```js
+```JavaScript
 var EpiClient = require("epiquery2-client").EpiClient;
 
 var client = new EpiClient('ws://localhost:7171/sockjs/websocket');
@@ -113,7 +113,7 @@ client.query("glglive", 'councilMember/game/getAchievements.mustache', {cmId: 2}
  
 The rows are collected in the onrow callback outlined above.  The message passed to this event contains a field called **columns** that is an array of key/value pairs.  The key is the name of the column and the value is the value of that column being returned.  Here is an example message.
 
-```json
+```JSON
 {
     "queryId": "1234",  //Optional
     "columns": [

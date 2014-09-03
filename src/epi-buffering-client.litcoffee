@@ -23,8 +23,17 @@ When a row set is began, a new object is inserted into the local **results** tha
           @results[msg.queryId].currentResultSet = newResultSet
           @results[msg.queryId].resultSets.push newResultSet
 
+Each time a row is returned, it turns the key/value pair into properties on an object.  The downside is that if you
+have multiple columns with the same name, this will eat them.  But then how would you have figured out which was which
+anyways?  Just give your columns unique names and avoid the issue.
+
         @client.onrow = (msg) =>
-          @results[msg.queryId].currentResultSet.push(msg.columns)
+          row = {}
+
+          msg.columns.forEach (column) ->
+            row[column.name] = column.value
+
+          @results[msg.queryId].currentResultSet.push(row)
 
 When the query completes, we call back to either the promise or user-provided callback.
 
